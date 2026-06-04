@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LMS Consolidation Survey — Canvas to Otus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="masthead fade">
+      <p class="kicker">LMS Review &middot; Teacher Input</p>
+      <h1>Before we consolidate, tell us what you'd <em>miss</em>.</h1>
+      <p class="lede">
+        We're weighing whether to drop Canvas and run everything on Otus. Otus is strong on
+        assessment and data, but its content-delivery (LMS) tools are lighter. This 3-minute survey
+        tells us which Canvas features you actually depend on — so the decision is made with your
+        classroom in mind, not despite it.
+      </p>
+      <nav class="nav-mini">
+        <a href="/results">View live results &rarr;</a>
+      </nav>
+    </header>
+
+    <div id="memory-banner"></div>
+
+    <form id="survey">
+      <!-- Section 1: about you -->
+      <section class="section fade" style="animation-delay:.05s">
+        <div class="section-head">
+          <span class="section-num">01</span>
+          <h2 class="section-title">About you</h2>
+        </div>
+        <p class="section-sub">Name is optional — division helps us weight the results.</p>
+        <div class="card">
+          <div class="grid-2">
+            <div class="field">
+              <label class="flabel" for="name">Name <span class="hint">(optional)</span></label>
+              <input type="text" id="name" name="name" placeholder="e.g., Jamie Rivera" autocomplete="off" />
+            </div>
+            <div class="field">
+              <label class="flabel" for="subjects">What do you teach? <span class="hint">(optional)</span></label>
+              <input type="text" id="subjects" name="subjects" placeholder="e.g., 7th grade Science" autocomplete="off" />
+            </div>
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <label class="flabel">Which division? <span class="hint">(required)</span></label>
+            <div class="pillset" id="division"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: feature reliance -->
+      <section class="section fade" style="animation-delay:.1s">
+        <div class="section-head">
+          <span class="section-num">02</span>
+          <h2 class="section-title">How much do you rely on each Canvas feature?</h2>
+        </div>
+        <p class="section-sub">
+          These are the capabilities Otus does less well. Be honest about what you'd lose —
+          "Critical" means you can't teach the way you do without it.
+        </p>
+        <div class="card" id="features"></div>
+      </section>
+
+      <!-- Section 3: specifics -->
+      <section class="section fade" style="animation-delay:.15s">
+        <div class="section-head">
+          <span class="section-num">03</span>
+          <h2 class="section-title">Specifics &amp; your take</h2>
+        </div>
+        <div class="card">
+          <div class="field">
+            <label class="flabel" for="integrations">
+              Which third-party tools / integrations do you rely on in Canvas?
+              <span class="hint">(so we can check Otus supports them)</span>
+            </label>
+            <textarea id="integrations" placeholder="e.g., Nearpod, Newsela, Khan Academy, Turnitin, Google Assignments…"></textarea>
+          </div>
+          <div class="field">
+            <label class="flabel" for="concerns">Your biggest concern about moving to Otus?</label>
+            <textarea id="concerns" placeholder="Anything that would make your teaching harder, or any quirk you've already hit in Otus."></textarea>
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <label class="flabel">Overall, how do you feel about consolidating to Otus?</label>
+            <div class="senti" id="sentiment"></div>
+          </div>
+        </div>
+      </section>
+
+      <div id="form-error"></div>
+
+      <div class="actions">
+        <button type="submit" class="btn" id="submit-btn">Submit my input</button>
+        <span class="save-note">Your responses are stored for the review team only.</span>
+      </div>
+    </form>
+
+    <div id="thanks" style="display:none"></div>
+
+    <footer class="foot">
+      <span>LMS Consolidation Review</span>
+      <span><a href="/results" style="color:inherit">Results dashboard</a></span>
+    </footer>
+  </div>
+
+  <script src="/survey.js"></script>
+</body>
+</html>

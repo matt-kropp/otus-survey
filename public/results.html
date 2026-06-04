@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Results — LMS Consolidation Survey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="masthead fade">
+      <p class="kicker">LMS Review &middot; Results</p>
+      <h1>What teachers would <em>lose</em> moving to Otus</h1>
+      <p class="lede">
+        Aggregated reliance on the Canvas features Otus does less well. Features are ranked by
+        migration risk — the share of teachers who use them regularly or can't teach without them.
+      </p>
+      <nav class="nav-mini">
+        <a href="/">&larr; Back to the survey</a>
+        <a href="#" id="csv-link">Download CSV</a>
+      </nav>
+    </header>
+
+    <!-- passcode gate (shown only if needed) -->
+    <div id="gate" style="display:none">
+      <div class="gate card fade">
+        <h2 class="section-title">Results are protected</h2>
+        <p class="section-sub">Enter the passcode to view aggregated results.</p>
+        <input type="password" id="passcode" placeholder="passcode" />
+        <button class="btn" id="gate-btn" style="width:100%">View results</button>
+        <p id="gate-err" style="color:var(--risk); font-size:13px; margin-top:10px"></p>
+      </div>
+    </div>
+
+    <!-- dashboard -->
+    <div id="dash" style="display:none">
+      <div id="memory-banner"></div>
+
+      <div class="statbar" id="stats"></div>
+
+      <div class="filterbar">
+        <span class="lbl">Show:</span>
+        <button class="pill active" data-f="all" style="flex:0 0 auto">All teachers</button>
+        <button class="pill" data-f="Middle School" style="flex:0 0 auto">Middle School</button>
+        <button class="pill" data-f="Lower School" style="flex:0 0 auto">Lower School</button>
+      </div>
+
+      <section class="section">
+        <div class="section-head">
+          <span class="section-num">01</span>
+          <h2 class="section-title">Feature reliance, ranked by migration risk</h2>
+        </div>
+        <p class="section-sub">Higher bars to the right = more teachers depend heavily on it = more painful to lose.</p>
+        <div class="card">
+          <div class="legend">
+            <span><i style="background:var(--r0)"></i>Don't use</span>
+            <span><i style="background:var(--r1)"></i>Occasionally</span>
+            <span><i style="background:var(--r2)"></i>Regularly</span>
+            <span><i style="background:var(--r3)"></i>Critical</span>
+          </div>
+          <div id="ranks"></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <span class="section-num">02</span>
+          <h2 class="section-title">Integrations teachers rely on</h2>
+        </div>
+        <div class="card"><div id="integrations"></div></div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <span class="section-num">03</span>
+          <h2 class="section-title">Concerns in teachers' own words</h2>
+        </div>
+        <div class="card"><div id="concerns"></div></div>
+      </section>
+    </div>
+
+    <footer class="foot">
+      <span>LMS Consolidation Review</span>
+      <span><a href="/" style="color:inherit">Take the survey</a></span>
+    </footer>
+  </div>
+
+  <script src="/results.js"></script>
+</body>
+</html>
