@@ -200,6 +200,10 @@ input:focus, textarea:focus, select:focus {
 .scale-opt[data-v="3"].sel { background: var(--r3); border-color: var(--r3); color: #fff; }
 .scale-opt.sel small { color: inherit; opacity: .85; }
 
+.scale-extra { margin-top: 8px; }
+.scale-opt-wide { width: 100%; border-style: dashed; }
+.scale-opt[data-v="4"].sel { background: #5a7d8c; border-color: #5a7d8c; color: #fff; }
+
 /* ----------------------------------------------------------- sentiment */
 .senti { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; }
 .senti-opt {
@@ -293,6 +297,8 @@ input:focus, textarea:focus, select:focus {
 .seg1 { background: var(--r1); }
 .seg2 { background: var(--r2); }
 .seg3 { background: var(--r3); }
+.seg4 { background: #5a7d8c; }
+.unaware-note { color: #5a7d8c; }
 
 .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12.5px; color: var(--ink-soft); margin: 4px 0 22px; }
 .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }

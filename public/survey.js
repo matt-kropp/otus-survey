@@ -4,52 +4,81 @@ const FEATURES = [
   {
     key: 'modules',
     name: 'Modules & sequenced content',
-    desc: 'Organizing a unit into ordered, gated steps students move through in order.',
+    desc:
+      'A way to lay out a unit as a numbered, step-by-step path. Students finish one item ' +
+      'before the next unlocks, so the whole class moves through your readings, videos, and ' +
+      'assignments in the order you intend.',
   },
   {
     key: 'masterypaths',
     name: 'MasteryPaths / conditional release',
-    desc: 'Auto-routing students to different content based on how they score.',
+    desc:
+      'The course automatically sends students down different paths based on their scores. ' +
+      'Students who are struggling get extra practice or review, while those who have already ' +
+      'mastered it move ahead — without you having to sort them by hand.',
   },
   {
     key: 'pages',
     name: 'Rich Pages & embedded media',
-    desc: 'Building lesson pages with embedded videos, widgets, or interactive tools (not just links).',
+    desc:
+      'Lesson pages you build right inside the course with videos, images, slideshows, and ' +
+      'interactive activities placed on the page itself — not just a list of links students ' +
+      'have to click out to.',
   },
   {
     key: 'discussions',
     name: 'Discussions, groups & peer review',
-    desc: 'Student-to-student academic discussion, group spaces, peer feedback.',
+    desc:
+      'Online spaces where students talk to each other about the work: class discussion boards, ' +
+      'small-group work areas, and having students read and give feedback on one another’s ' +
+      'assignments.',
   },
   {
     key: 'speedgrader',
     name: 'SpeedGrader',
-    desc: 'Inline annotation, rubrics on submissions, audio/video feedback, comment banks.',
+    desc:
+      'A grading screen where you mark up a student’s submission directly — highlight and comment ' +
+      'on their work, score it against a rubric, leave a voice or video note, and reuse saved ' +
+      'comments — all in one place.',
   },
   {
     key: 'gradebook',
     name: 'Weighted gradebook & grade transparency',
-    desc: 'Clear weighted letter/point grade calculation you can explain to families.',
+    desc:
+      'A gradebook that automatically figures out final grades when categories are weighted ' +
+      '(say, tests 50%, homework 20%), and shows students and families a clear, up-to-date ' +
+      'picture of where the grade stands and why.',
   },
   {
     key: 'integrations_feat',
     name: 'Third-party app integrations (LTI)',
-    desc: 'External tools that plug directly into your course.',
+    desc:
+      'Outside programs and websites you teach with — reading, math, or video tools — that open ' +
+      'and work inside your course and send scores back to your gradebook automatically, instead ' +
+      'of being separate logins students juggle.',
   },
   {
     key: 'blueprint',
     name: 'Blueprint / Commons content sharing',
-    desc: 'Pushing one standard course shell across sections; sharing content with colleagues.',
+    desc:
+      'Build one master version of a course and push it out to every section or teacher at once, ' +
+      'so updates stay consistent everywhere — plus a shared library for swapping ready-made ' +
+      'lessons with colleagues.',
   },
   {
     key: 'calendar',
     name: 'Calendar, Syllabus & Conferences',
-    desc: 'Integrated scheduling, a living syllabus, built-in video conferencing.',
+    desc:
+      'The built-in calendar that shows students all their due dates in one place, an ' +
+      'auto-updating syllabus/course outline, and the ability to hold live video class meetings ' +
+      'from inside the course.',
   },
   {
     key: 'mobile',
     name: 'Mobile apps',
-    desc: 'The Student / Teacher / Parent apps you rely on day to day.',
+    desc:
+      'The phone and tablet apps that let you, your students, and their parents check ' +
+      'assignments, grades, and announcements on the go.',
   },
 ];
 
@@ -59,6 +88,9 @@ const SCALE = [
   { v: 2, label: 'Regularly', sub: 'Part of my routine' },
   { v: 3, label: 'Critical', sub: "Can't teach without it" },
 ];
+
+// Captures latent demand: teachers who never knew the feature was there.
+const UNAWARE = { v: 4, label: "Didn't know it existed", sub: 'but I’d have used it' };
 
 const SENTI = [
   { v: 1, face: '😟', label: 'Opposed' },
@@ -98,19 +130,35 @@ FEATURES.forEach((f) => {
   row.innerHTML = `
     <p class="feature-name">${f.name}</p>
     <p class="feature-desc">${f.desc}</p>
-    <div class="scale" data-key="${f.key}"></div>`;
+    <div class="scale" data-key="${f.key}"></div>
+    <div class="scale-extra" data-key="${f.key}"></div>`;
   const scale = row.querySelector('.scale');
+  const extra = row.querySelector('.scale-extra');
+
+  const allOpts = [];
+  const select = (opt, v) => {
+    state.features[f.key] = v;
+    allOpts.forEach((c) => c.classList.toggle('sel', c === opt));
+  };
+
   SCALE.forEach((s) => {
     const opt = document.createElement('div');
     opt.className = 'scale-opt';
     opt.dataset.v = s.v;
     opt.innerHTML = `${s.label}<small>${s.sub}</small>`;
-    opt.addEventListener('click', () => {
-      state.features[f.key] = s.v;
-      [...scale.children].forEach((c) => c.classList.toggle('sel', c === opt));
-    });
+    opt.addEventListener('click', () => select(opt, s.v));
     scale.appendChild(opt);
+    allOpts.push(opt);
   });
+
+  const unaware = document.createElement('div');
+  unaware.className = 'scale-opt scale-opt-wide';
+  unaware.dataset.v = UNAWARE.v;
+  unaware.innerHTML = `${UNAWARE.label}<small>${UNAWARE.sub}</small>`;
+  unaware.addEventListener('click', () => select(unaware, UNAWARE.v));
+  extra.appendChild(unaware);
+  allOpts.push(unaware);
+
   featEl.appendChild(row);
 });
 

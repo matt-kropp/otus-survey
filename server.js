@@ -137,7 +137,8 @@ function sanitizeResponse(body) {
   const incoming = body.features && typeof body.features === 'object' ? body.features : {};
   for (const key of FEATURE_KEYS) {
     const v = parseInt(incoming[key], 10);
-    features[key] = v >= 0 && v <= 3 ? v : 0;
+    // 0..3 = reliance level; 4 = "didn't know it existed but would have used it"
+    features[key] = v >= 0 && v <= 4 ? v : 0;
   }
   out.features = features;
   return out;

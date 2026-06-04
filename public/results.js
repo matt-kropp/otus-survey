@@ -125,14 +125,15 @@ function renderStats(rows) {
 function renderRanks(rows) {
   const n = rows.length;
   const data = FEATURE_META.map((f) => {
-    const counts = [0, 0, 0, 0];
+    const counts = [0, 0, 0, 0, 0]; // index 4 = "didn't know it existed"
     rows.forEach((r) => {
       const v = (r.features || {})[f.key];
-      if (v >= 0 && v <= 3) counts[v]++;
+      if (v >= 0 && v <= 4) counts[v]++;
     });
     const heavy = counts[2] + counts[3]; // regular + critical
+    const unaware = counts[4];
     const riskPct = n ? Math.round((heavy / n) * 100) : 0;
-    return { ...f, counts, heavy, crit: counts[3], riskPct };
+    return { ...f, counts, heavy, crit: counts[3], unaware, riskPct };
   });
   data.sort((a, b) => b.riskPct - a.riskPct || b.crit - a.crit);
 
@@ -144,23 +145,26 @@ function renderRanks(rows) {
   ranksEl.innerHTML = data
     .map((f) => {
       const pct = (c) => (n ? (c / n) * 100 : 0);
-      const segs = [0, 1, 2, 3]
+      const segs = [0, 1, 2, 3, 4]
         .map((i) =>
           f.counts[i] ? `<div class="seg seg${i}" style="width:${pct(f.counts[i])}%" title="${SCALE_LABEL[i]}: ${f.counts[i]}"></div>` : ''
         )
         .join('');
+      const unawareNote = f.unaware
+        ? ` &middot; <span class="unaware-note">${f.unaware} didn’t know</span>`
+        : '';
       return `
       <div class="rankrow">
         <div class="top">
           <span class="fname">${f.name}</span>
-          <span class="fscore"><b>${f.riskPct}%</b> rely on it &middot; ${f.crit} critical</span>
+          <span class="fscore"><b>${f.riskPct}%</b> rely on it &middot; ${f.crit} critical${unawareNote}</span>
         </div>
         <div class="stackbar">${segs}</div>
       </div>`;
     })
     .join('');
 }
-const SCALE_LABEL = ["Don't use", 'Occasionally', 'Regularly', 'Critical'];
+const SCALE_LABEL = ["Don't use", 'Occasionally', 'Regularly', 'Critical', "Didn't know it existed"];
 
 /* ---------- integrations ---------- */
 function renderIntegrations(rows) {
